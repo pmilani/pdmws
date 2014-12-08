@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:pdm="http://strazzabosco.com/schemas/pdm-ws">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pdm:storeBusinessOpportunityRequest>
+         <pdm:metadataId>ABC123</pdm:metadataId>
+      </pdm:storeBusinessOpportunityRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://strazzabosco.com/schemas/pdm-ws" xmlns:tns="http://strazzabosco.com/schemas/pdm-ws" elementFormDefault="qualified">
+
+    <complexType name="StoreOperationResponse">
+        <sequence>
+            <element name="stored" type="boolean"/>
+            <element name="note" type="string"/>
+        </sequence>
+    </complexType>
+
+    <element name="storeMetadataRequest">
+        <complexType>
+            <sequence>
+                <element name="metadataId" type="string"/>
+                <element name="metadataContent" type="base64Binary"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="storeMetadataResponse">
+        <complexType>
+            <complexContent>
+                <extension base="tns:StoreOperationResponse"></extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="storeBusinessOpportunityRequest">
+        <complexType>
+            <sequence>
+                <element name="metadataId" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="storeBusinessOpportunityResponse">
+        <complexType>
+            <complexContent>
+                <extension base="tns:StoreOperationResponse"></extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="storeDocumentRequest">
+        <complexType>
+            <sequence>
+                <element name="metadataId" type="string"/>
+                <element name="documentClass" type="string"/>
+                <element name="documentContent" type="base64Binary"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="storeDocumentResponse">
+        <complexType>
+            <complexContent>
+                <extension base="tns:StoreOperationResponse"></extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+</schema>
