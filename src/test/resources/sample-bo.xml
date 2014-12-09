@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Business_Opportunity PathVault="$\ALPAC\COMMESSE\BO-001" Company="ALPAC">
+    <Numero_Bo>BO-001</Numero_Bo>
+    <Riferimento_Bo>rif bo</Riferimento_Bo>
+    <Nota_Aggiuntiva>note agg</Nota_Aggiuntiva>
+    <Codice_Cliente>cli001</Codice_Cliente>
+    <Ragione_Sociale>rs22</Ragione_Sociale>
+    <Anno>1200</Anno>
+</Business_Opportunity>

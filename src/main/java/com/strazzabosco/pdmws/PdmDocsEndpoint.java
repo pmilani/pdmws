@@ -6,13 +6,13 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import org.w3c.dom.Document;
 
 import com.strazzabosco.schemas.pdm_ws.StoreBusinessOpportunityRequest;
 import com.strazzabosco.schemas.pdm_ws.StoreBusinessOpportunityResponse;
 import com.strazzabosco.schemas.pdm_ws.StoreDocumentRequest;
 import com.strazzabosco.schemas.pdm_ws.StoreDocumentResponse;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest;
+import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest.MetadataContent;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataResponse;
 
 @Endpoint
@@ -36,8 +36,7 @@ public class PdmDocsEndpoint {
             throw new IllegalArgumentException("metadataId is required");
         }
     
-        Document dom = pdmWorkflow.parseMetadataXml(request.getMetadataContent());
-        metadataRepository.addMetadata(request.getMetadataId(), dom);
+        metadataRepository.addMetadata(request.getMetadataId(), request.getMetadataContent());
         response.setStored(true);
         response.setNote("");
         return response;
@@ -48,8 +47,8 @@ public class PdmDocsEndpoint {
     public StoreBusinessOpportunityResponse storeBO(@RequestPayload StoreBusinessOpportunityRequest request) {
         StoreBusinessOpportunityResponse response = new StoreBusinessOpportunityResponse();
         
-        Document metadata = metadataRepository.getMetadata(request.getMetadataId());
-        pdmWorkflow.generateBoXml(metadata);
+        MetadataContent metadata = metadataRepository.getMetadata(request.getMetadataId());
+        pdmWorkflow.generateBoXml(metadata.getDatiBO());
         response.setStored(true);
         response.setNote("");
         return response;

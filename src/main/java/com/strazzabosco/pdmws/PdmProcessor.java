@@ -1,12 +1,15 @@
 package com.strazzabosco.pdmws;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
+import org.apache.commons.exec.ExecuteStreamHandler;
 import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PdmProcessor {
+    private final static Logger LOG = Logger.getLogger(PdmProcessor.class);
 
     private static final int PROCESS_TIMEOUT = 60000;
     
@@ -28,22 +32,64 @@ public class PdmProcessor {
         executor = new DefaultExecutor();
         watchdog = new ExecuteWatchdog(PROCESS_TIMEOUT);
         executor.setWatchdog(watchdog);
-    }
-
-    public void invokePdm() {
-        CommandLine cmdLine = new CommandLine("${pdmCommand}");
-        cmdLine.addArgument("${xmlFile}");
+        ExecuteStreamHandler streamHandler = new PdmStreamHandler();
+        //executor.setStreamHandler(streamHandler);
         
-        DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
         try {
-            executor.execute(cmdLine, handler);
-            handler.waitFor();
+            LOG.debug("Working dir: "+ executor.getWorkingDirectory().getCanonicalPath());
+        } catch (IOException e) {}
+    }
+    
+    public void invokePdm(String boPath) {
+        CommandLine cmdLine = new CommandLine(pdmCommand);
+        cmdLine.addArgument(boPath);
+        
+        try {
+            int exitCode = executor.execute(cmdLine);
         } catch (ExecuteException e) {
-            e.printStackTrace();
+            LOG.error("invokePdm failed", e);
+            throw new PdmExecutionException();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOG.error("invokePdm failed", e);
+            throw new PdmExecutionException();
         }
     }
+
+    static class PdmStreamHandler implements ExecuteStreamHandler {
+
+        @SuppressWarnings("unused")
+        private OutputStream pdmInput;
+
+        @SuppressWarnings("unused")
+        private InputStream pdmOutput;
+        
+        @SuppressWarnings("unused")
+        private InputStream pdmError;
+
+        @Override
+        public void setProcessErrorStream(InputStream is) throws IOException {
+            pdmError = is;
+        }
+
+        @Override
+        public void setProcessInputStream(OutputStream os) throws IOException {
+            pdmInput = os;
+        }
+
+        @Override
+        public void setProcessOutputStream(InputStream is) throws IOException {
+            pdmOutput = is;
+        }
+
+        @Override
+        public void start() throws IOException {
+        }
+
+        @Override
+        public void stop() throws IOException {
+        }
+        
+    }
+
+
 }

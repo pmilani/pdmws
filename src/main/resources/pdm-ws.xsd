@@ -12,7 +12,13 @@
         <complexType>
             <sequence>
                 <element name="metadataId" type="string"/>
-                <element name="metadataContent" type="base64Binary"/>
+                <element name="metadataContent">
+                    <complexType>
+                        <sequence>
+                            <element ref="tns:DatiBO"/>
+                        </sequence>
+                    </complexType>
+                </element>
             </sequence>
         </complexType>
     </element>
@@ -56,6 +62,49 @@
             <complexContent>
                 <extension base="tns:StoreOperationResponse"></extension>
             </complexContent>
+        </complexType>
+    </element>
+
+    <element name="DatiBO">
+        <complexType>
+            <sequence>
+                <element name="Libreria" type="string"/>
+                <element name="Documento" type="string"/>
+                <element name="NumeroBO" type="string"/>
+                <element name="DescrizioneBO" type="string"/>
+                <element name="TipoDocumento" type="string"/>
+                <element name="NumeroDocumento" type="string"/>
+                <element name="DataDocumento" type="string"/>
+                <element name="DataRichiestaConsegna" type="string"/>
+                <element name="DataConfermaConsegna" type="string"/>
+                <element name="DataIngressoProposta" type="string"/>
+                <element name="Riferimento" type="string"/>
+                <element name="RiferimentoTecnico" type="string"/>
+                <element name="CapoArea" type="string"/>
+                <element name="Agente" type="string"/>
+                <element name="CodiceCliente" type="string"/>
+                <element name="RagioneSociale" type="string"/>
+                <element name="Firma" type="string"/>
+                <element name="TipoProdotto" type="string"/>
+                <element name="OrdineIntercompany" type="string"/>
+                <element name="ProvinciaDestinazione" type="string"/>
+                <element name="DestinatarioMerce" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+    
+    <element name="BusinessOpportunity">
+        <complexType>
+            <sequence>
+                <element name="Numero_Bo" type="string"/>
+                <element name="Riferimento_Bo" type="string"/>
+                <element name="Nota_Aggiuntiva" type="string"/>
+                <element name="Codice_Cliente" type="string"/>
+                <element name="Ragione_Sociale" type="string"/>
+                <element name="Anno" type="string"/>
+            </sequence>
+            <attribute name="PathVault" type="string"/>
+            <attribute name="Company" type="string"/>
         </complexType>
     </element>
 

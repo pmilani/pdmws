@@ -5,22 +5,23 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
+
+import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest.MetadataContent;
 
 @Component
 public class MetadataRepository {
     public static final Logger LOG = Logger.getLogger(MetadataRepository.class);
 
-    private static final Map<String, Document> metadata = new HashMap<String, Document>();
+    private static final Map<String, MetadataContent> metadata = new HashMap<String, MetadataContent>();
     
-    public void addMetadata(String id, Document data) {
-        metadata.put(id, data);
+    public void addMetadata(String id, MetadataContent metadataContent) {
+        metadata.put(id, metadataContent);
         LOG.info("Added metadata to repository, id="+ id);
     }
     
-    public Document getMetadata(String id) {
+    public MetadataContent getMetadata(String id) {
         if (!metadata.containsKey(id)) {
-            throw new IllegalArgumentException("metadataId not present");
+            throw new IllegalArgumentException("metadataId not found in repository");
         }
         return metadata.get(id);
     }

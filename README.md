@@ -29,10 +29,19 @@ via `java -jar`.
 
 All'avvio sara' eseguito il bootstrap di un server web standalone.
 Il server per default sara' disponibile su:
-http://localhost:8080/ws
+http://localhost:8090/ws
 
 #### WSDL
-http://localhost:8080/ws/pdm-ws.wsdl
+http://localhost:8090/ws/pdm-ws.wsdl
+
+#### Override settings
+E' possibile passare da command-line i settings dell'applicazione come ad es.
+--server.port=9000 
+--server.address=192.168.0.1
+
+Oppure creando un apposito file application.properties con tali properties
+
+Vedere anche la doc. Spring Boot per altri parametri configurabili
 
 
 ## Test manuale
@@ -41,7 +50,7 @@ Per invocare il servizio manualmente si puo' utilizzare un tool come `curl`
 o `wget`.
 
 Es: inviare una richiesta addMetadata 
-```$ curl --header "content-type: text/xml" -d @store-metadata-request.xml http://localhost:8080/ws```
+```$ curl --header "content-type: text/xml" -d @store-metadata-request.xml http://localhost:8090/ws```
 
 La dir. `test/resources` contiene richieste d'esempio
 
@@ -72,6 +81,6 @@ bisognera' ri-eseguire il goal eclipse:eclipse e fare il refresh del workspace i
 
 ## Riferimenti
 
-Guida base:
+http://docs.spring.io/spring-boot/docs/1.1.9.RELEASE/reference/htmlsingle/
 http://spring.io/guides/gs/producing-web-service/
 

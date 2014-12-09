@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<DatiBO>
+	<Libreria>PRO80DAT</Libreria>
+	<Documento>OF</Documento>
+	<NumeroBO>30</NumeroBO>
+	<DescrizioneBO><![CDATA[CANTIERE PROVA]]></DescrizioneBO>
+	<TipoDocumento><![CDATA[P]]></TipoDocumento>
+	<NumeroDocumento>1400053</NumeroDocumento>
+	<DataDocumento>20141201</DataDocumento>
+	<DataRichiestaConsegna>20141220</DataRichiestaConsegna>
+	<DataConfermaConsegna>20141228</DataConfermaConsegna>
+	<DataIngressoProposta></DataIngressoProposta>
+	<Riferimento><![CDATA[]]></Riferimento>
+	<RiferimentoTecnico><![CDATA[]]></RiferimentoTecnico>
+	<CapoArea><![CDATA[MASENELLO CARLO]]></CapoArea>
+	<Agente><![CDATA[DIREZIONALI ITALIA]]></Agente> 
+	<CodiceCliente>1410110000</CodiceCliente>
+	<RagioneSociale><![CDATA[ALPAC S.R.L. UNIPERSONALE]]></RagioneSociale>
+	<Firma>S</Firma>
+	<TipoProdotto><![CDATA[]]></TipoProdotto> ???
+	<OrdineIntercompany><![CDATA[]]></OrdineIntercompany> ??? 
+	<ProvinciaDestinazione><![CDATA[]]></ProvinciaDestinazione> ???
+	<DestinatarioMerce><![CDATA[]]></DestinatarioMerce> ???
+</DatiBO>
