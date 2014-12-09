@@ -12,19 +12,16 @@ import com.strazzabosco.schemas.pdm_ws.StoreBusinessOpportunityResponse;
 import com.strazzabosco.schemas.pdm_ws.StoreDocumentRequest;
 import com.strazzabosco.schemas.pdm_ws.StoreDocumentResponse;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest;
-import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest.MetadataContent;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataResponse;
 
 @Endpoint
 public class PdmDocsEndpoint {
     public static final String NAMESPACE_URI="http://strazzabosco.com/schemas/pdm-ws";
 
-    private MetadataRepository metadataRepository;
     private PdmWorkflow pdmWorkflow;
 
     @Autowired
-    public PdmDocsEndpoint(MetadataRepository metadataRepository, PdmWorkflow pdmWorkflow) {
-        this.metadataRepository = metadataRepository;
+    public PdmDocsEndpoint(PdmWorkflow pdmWorkflow) {
         this.pdmWorkflow = pdmWorkflow;
     }
     
@@ -35,8 +32,8 @@ public class PdmDocsEndpoint {
         if (StringUtils.isEmpty(request.getMetadataId())) {
             throw new IllegalArgumentException("metadataId is required");
         }
-    
-        metadataRepository.addMetadata(request.getMetadataId(), request.getMetadataContent());
+
+        pdmWorkflow.addMetadata(request.getMetadataId(), request.getMetadataContent());
         response.setStored(true);
         response.setNote("");
         return response;
@@ -47,10 +44,9 @@ public class PdmDocsEndpoint {
     public StoreBusinessOpportunityResponse storeBO(@RequestPayload StoreBusinessOpportunityRequest request) {
         StoreBusinessOpportunityResponse response = new StoreBusinessOpportunityResponse();
         
-        MetadataContent metadata = metadataRepository.getMetadata(request.getMetadataId());
-        pdmWorkflow.generateBoXml(metadata.getDatiBO());
+        PdmExecutionResult execution = pdmWorkflow.generateBoXml(request.getMetadataId());
         response.setStored(true);
-        response.setNote("");
+        response.setNote(execution.message);
         return response;
     }
 

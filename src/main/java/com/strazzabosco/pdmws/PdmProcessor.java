@@ -1,14 +1,16 @@
 package com.strazzabosco.pdmws;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
-import org.apache.commons.exec.ExecuteStreamHandler;
 import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.Executor;
+import org.apache.commons.exec.LogOutputStream;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,30 +24,33 @@ public class PdmProcessor {
 
     private static final int PROCESS_TIMEOUT = 60000;
     
-    private DefaultExecutor executor;
-    private ExecuteWatchdog watchdog;
-
     @Value("${pdm.command}")
     private String pdmCommand;
+
     
-    public PdmProcessor() {
-        executor = new DefaultExecutor();
-        watchdog = new ExecuteWatchdog(PROCESS_TIMEOUT);
-        executor.setWatchdog(watchdog);
-        ExecuteStreamHandler streamHandler = new PdmStreamHandler();
-        //executor.setStreamHandler(streamHandler);
+    private Executor createExecutor(CollectingLogOutputStream output) {
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setWatchdog(new ExecuteWatchdog(PROCESS_TIMEOUT));
+        executor.setStreamHandler(new PumpStreamHandler(output));
         
         try {
             LOG.debug("Working dir: "+ executor.getWorkingDirectory().getCanonicalPath());
         } catch (IOException e) {}
+        
+        return executor;
     }
     
-    public void invokePdm(String boPath) {
+    public PdmExecutionResult executePdm(String boPath) {
         CommandLine cmdLine = new CommandLine(pdmCommand);
         cmdLine.addArgument(boPath);
+
+        CollectingLogOutputStream output = new CollectingLogOutputStream();
+        Executor executor = createExecutor(output);
         
         try {
+            // note this is synchronous for easier manipulation
             int exitCode = executor.execute(cmdLine);
+            return new PdmExecutionResult(exitCode, output.getLines());
         } catch (ExecuteException e) {
             LOG.error("invokePdm failed", e);
             throw new PdmExecutionException();
@@ -54,42 +59,17 @@ public class PdmProcessor {
             throw new PdmExecutionException();
         }
     }
-
-    static class PdmStreamHandler implements ExecuteStreamHandler {
-
-        @SuppressWarnings("unused")
-        private OutputStream pdmInput;
-
-        @SuppressWarnings("unused")
-        private InputStream pdmOutput;
+    
+    private static class CollectingLogOutputStream extends LogOutputStream {
+        private final List<String> lines = new LinkedList<String>();
         
-        @SuppressWarnings("unused")
-        private InputStream pdmError;
-
-        @Override
-        public void setProcessErrorStream(InputStream is) throws IOException {
-            pdmError = is;
-        }
-
-        @Override
-        public void setProcessInputStream(OutputStream os) throws IOException {
-            pdmInput = os;
-        }
-
-        @Override
-        public void setProcessOutputStream(InputStream is) throws IOException {
-            pdmOutput = is;
-        }
-
-        @Override
-        public void start() throws IOException {
-        }
-
-        @Override
-        public void stop() throws IOException {
+        @Override protected void processLine(String line, int level) {
+            lines.add(line);
         }
         
+        public List<String> getLines() {
+            return lines;
+        }
     }
-
 
 }
