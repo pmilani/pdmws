@@ -98,7 +98,6 @@
             <sequence>
                 <element name="Numero_Bo" type="string"/>
                 <element name="Riferimento_Bo" type="string"/>
-                <element name="Nota_Aggiuntiva" type="string"/>
                 <element name="Codice_Cliente" type="string"/>
                 <element name="Ragione_Sociale" type="string"/>
                 <element name="Anno" type="string"/>

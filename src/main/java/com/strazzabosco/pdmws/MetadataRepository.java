@@ -21,7 +21,7 @@ public class MetadataRepository {
     
     public MetadataContent getMetadata(String id) {
         if (!metadata.containsKey(id)) {
-            throw new IllegalArgumentException("metadataId not found in repository");
+            throw new MetadataNotFoundException(id);
         }
         return metadata.get(id);
     }

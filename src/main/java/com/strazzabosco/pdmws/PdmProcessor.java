@@ -40,9 +40,9 @@ public class PdmProcessor {
         return executor;
     }
     
-    public PdmExecutionResult executePdm(String boPath) {
+    public PdmExecutionResult executePdm(String pathname) {
         CommandLine cmdLine = new CommandLine(pdmCommand);
-        cmdLine.addArgument(boPath);
+        cmdLine.addArgument(pathname);
 
         CollectingLogOutputStream output = new CollectingLogOutputStream();
         Executor executor = createExecutor(output);

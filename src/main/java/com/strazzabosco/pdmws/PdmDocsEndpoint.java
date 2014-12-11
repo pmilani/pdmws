@@ -28,12 +28,12 @@ public class PdmDocsEndpoint {
     @PayloadRoot(localPart="storeMetadataRequest", namespace=NAMESPACE_URI)
     @ResponsePayload
     public StoreMetadataResponse storeMetadata(@RequestPayload StoreMetadataRequest request) {
-        StoreMetadataResponse response = new StoreMetadataResponse();
         if (StringUtils.isEmpty(request.getMetadataId())) {
             throw new IllegalArgumentException("metadataId is required");
         }
-
         pdmWorkflow.addMetadata(request.getMetadataId(), request.getMetadataContent());
+
+        StoreMetadataResponse response = new StoreMetadataResponse();
         response.setStored(true);
         response.setNote("");
         return response;
@@ -42,10 +42,10 @@ public class PdmDocsEndpoint {
     @PayloadRoot(localPart="storeBusinessOpportunityRequest", namespace=NAMESPACE_URI)
     @ResponsePayload
     public StoreBusinessOpportunityResponse storeBO(@RequestPayload StoreBusinessOpportunityRequest request) {
-        StoreBusinessOpportunityResponse response = new StoreBusinessOpportunityResponse();
+        PdmExecutionResult execution = pdmWorkflow.acquireBusinessOpportunity(request.getMetadataId());
         
-        PdmExecutionResult execution = pdmWorkflow.generateBoXml(request.getMetadataId());
-        response.setStored(true);
+        StoreBusinessOpportunityResponse response = new StoreBusinessOpportunityResponse();
+        response.setStored(execution.acquired);
         response.setNote(execution.message);
         return response;
     }
@@ -53,6 +53,11 @@ public class PdmDocsEndpoint {
     @PayloadRoot(localPart="storeDocumentRequest", namespace=NAMESPACE_URI)
     @ResponsePayload
     public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) {
+        PdmExecutionResult execution = pdmWorkflow.acquireDocument(
+                request.getMetadataId(), 
+                request.getDocumentClass(), 
+                request.getDocumentContent());
+        
         StoreDocumentResponse response = new StoreDocumentResponse();
         return response;
     }

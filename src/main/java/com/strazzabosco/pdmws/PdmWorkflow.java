@@ -17,7 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
 import org.springframework.stereotype.Component;
 
-import com.strazzabosco.pdmws.bo.generators.BusinessOpportunityGenerator;
+import com.strazzabosco.pdmws.bo.BusinessOpportunityGenerator;
+import com.strazzabosco.pdmws.doc.DocumentClassRegistry;
 import com.strazzabosco.schemas.pdm_ws.BusinessOpportunity;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest.MetadataContent;
 
@@ -28,21 +29,27 @@ public class PdmWorkflow {
     private MetadataRepository metadataRepository;
     private BusinessOpportunityGenerator boGenerator;
     private PdmProcessor pdmProcessor;
+    private DocumentClassRegistry documentClassRegistry; 
     
     private Marshaller marshaller;
     
     @Value("${directory.bo}")
     private String boOutputDir;
 
+    @Value("${directory.doc}")
+    private String docOutputDir;
+
     private static int boSerialNumber = 1;
+    private static int docSerialNumber = 1;
 
     @Autowired
-    public PdmWorkflow(Marshaller marshaller, MetadataRepository metadataRepository, BusinessOpportunityGenerator generator,
-            PdmProcessor pdmProcessor) {
+    public PdmWorkflow(Marshaller marshaller, MetadataRepository repository, BusinessOpportunityGenerator generator,
+            PdmProcessor pdmProcessor, DocumentClassRegistry registry) {
         this.marshaller = marshaller;
-        this.metadataRepository = metadataRepository;
+        this.metadataRepository = repository;
         this.boGenerator = generator;
         this.pdmProcessor = pdmProcessor;
+        this.documentClassRegistry = registry;
     }
     
     @PostConstruct
@@ -56,14 +63,7 @@ public class PdmWorkflow {
         metadataRepository.addMetadata(id, metadataContent);
     }
     
-    private String getBoOutputPathname() {
-        LocalDateTime now = new LocalDateTime();
-        String pathStr = now.toString(DateTimeFormat.forPattern("YYYYMMdd"));
-        String fileStr = now.toString(DateTimeFormat.forPattern("YYYYMMddHHmm"));
-        return String.format("%s/%s-%06d.xml", pathStr, fileStr, boSerialNumber);
-    }
-
-    public PdmExecutionResult generateBoXml(String metadataId) {
+    public PdmExecutionResult acquireBusinessOpportunity(String metadataId) {
         MetadataContent metadata = metadataRepository.getMetadata(metadataId);
         BusinessOpportunity bo = boGenerator.transform(metadata.getDatiBO());
         String fname = getBoOutputPathname();
@@ -83,5 +83,40 @@ public class PdmWorkflow {
             throw new PdmException("Error creating BO");
         }
     }
+
+    private String getBoOutputPathname() {
+        LocalDateTime now = new LocalDateTime();
+        String pathStr = now.toString(DateTimeFormat.forPattern("YYYYMMdd"));
+        String fileStr = now.toString(DateTimeFormat.forPattern("YYYYMMddHHmm"));
+        return String.format("%s/%s-%06d.xml", pathStr, fileStr, boSerialNumber);
+    }
+
+    public PdmExecutionResult acquireDocument(String metadataId, String documentClass, byte[] documentContent) {
+        MetadataContent metadata = metadataRepository.getMetadata(metadataId);
+        documentClassRegistry.validate(documentClass);
+
+        String path = getDocOutputPath();
+        File dir = new File(FilenameUtils.concat(docOutputDir, path));
+        
+        try {
+            File docFile = new File(dir, "doc");    // FIXME file name?
+            FileUtils.writeByteArrayToFile(docFile, documentContent);
+
+            docSerialNumber++;
+
+            return pdmProcessor.executePdm(dir.getCanonicalPath());
+            
+        } catch (IOException e) {
+            LOG.error("error writing doc at: "+ path);
+            throw new PdmException("Error creating Doc");
+        }
+    }
     
+    private String getDocOutputPath() {
+        LocalDateTime now = new LocalDateTime();
+        String pathStr = now.toString(DateTimeFormat.forPattern("YYYYMMdd"));
+        String fileStr = now.toString(DateTimeFormat.forPattern("YYYYMMddHHmm"));
+        return String.format("%s/%s-%06d", pathStr, fileStr, docSerialNumber);
+    }
+
 }

@@ -17,8 +17,8 @@
 	<CodiceCliente>1410110000</CodiceCliente>
 	<RagioneSociale><![CDATA[ALPAC S.R.L. UNIPERSONALE]]></RagioneSociale>
 	<Firma>S</Firma>
-	<TipoProdotto><![CDATA[]]></TipoProdotto> ???
-	<OrdineIntercompany><![CDATA[]]></OrdineIntercompany> ??? 
-	<ProvinciaDestinazione><![CDATA[]]></ProvinciaDestinazione> ???
-	<DestinatarioMerce><![CDATA[]]></DestinatarioMerce> ???
+	<TipoProdotto></TipoProdotto> ???
+	<OrdineIntercompany><![CDATA[]]></OrdineIntercompany> 
+	<ProvinciaDestinazione>VI</ProvinciaDestinazione>
+	<DestinatarioMerce><![CDATA[]]></DestinatarioMerce>
 </DatiBO>
