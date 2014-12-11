@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
 
 import com.strazzabosco.pdmws.bo.BusinessOpportunityGenerator;
 import com.strazzabosco.pdmws.doc.DocumentClassRegistry;
-import com.strazzabosco.schemas.pdm_ws.BusinessOpportunity;
+import com.strazzabosco.pdmws.doc.DocumentGenerator;
+import com.strazzabosco.schemas.pdm_docs.BusinessOpportunity;
 import com.strazzabosco.schemas.pdm_ws.StoreMetadataRequest.MetadataContent;
 
 @Component
@@ -94,13 +95,19 @@ public class PdmWorkflow {
     public PdmExecutionResult acquireDocument(String metadataId, String documentClass, byte[] documentContent) {
         MetadataContent metadata = metadataRepository.getMetadata(metadataId);
         documentClassRegistry.validate(documentClass);
+        DocumentGenerator<?> gen = documentClassRegistry.getGenerator(documentClass);
+        Object documentXml = gen.transform(metadata.getDatiBO());
 
         String path = getDocOutputPath();
         File dir = new File(FilenameUtils.concat(docOutputDir, path));
-        
         try {
-            File docFile = new File(dir, "doc");    // FIXME file name?
-            FileUtils.writeByteArrayToFile(docFile, documentContent);
+            File dataFile = new File(dir, "document.rtf");    // FIXME file name?
+            FileUtils.writeByteArrayToFile(dataFile, documentContent);
+            
+            File xmlFile = new File(dir, "descriptor.xml");
+            FileWriter writer = new FileWriter(xmlFile);
+            StreamResult result = new StreamResult(writer);
+            marshaller.marshal(documentXml, result);
 
             docSerialNumber++;
 

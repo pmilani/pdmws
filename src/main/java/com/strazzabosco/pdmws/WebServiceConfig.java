@@ -20,7 +20,8 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
-import com.strazzabosco.schemas.pdm_ws.BusinessOpportunity;
+import com.strazzabosco.schemas.pdm_docs.BusinessOpportunity;
+import com.strazzabosco.schemas.pdm_docs.PDMDocument;
 
 @EnableWs
 @Configuration
@@ -35,24 +36,24 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
     
     @Bean(name="pdm-ws")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema pdmImportServiceSchema) {
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema pdmWebServiceSchema) {
         DefaultWsdl11Definition defaultWsdl11Definition = new DefaultWsdl11Definition();
         defaultWsdl11Definition.setPortTypeName("PdmWsPort");
         defaultWsdl11Definition.setTargetNamespace(PdmDocsEndpoint.NAMESPACE_URI);
         defaultWsdl11Definition.setLocationUri("/ws");
-        defaultWsdl11Definition.setSchema(pdmImportServiceSchema);
+        defaultWsdl11Definition.setSchema(pdmWebServiceSchema);
         return defaultWsdl11Definition;
     }
     
     @Bean
-    public XsdSchema pdmImportServiceSchema() {
+    public XsdSchema pdmWebServiceSchema() {
         return new SimpleXsdSchema(new ClassPathResource("pdm-ws.xsd"));
     }
 
     @Override
     public void addInterceptors(List<EndpointInterceptor> interceptors) {
         PayloadValidatingInterceptor interceptor = new PayloadValidatingInterceptor();
-        interceptor.setXsdSchema(pdmImportServiceSchema());
+        interceptor.setXsdSchema(pdmWebServiceSchema());
         interceptor.setValidateRequest(true);
         interceptor.setValidateResponse(true);
         interceptors.add(interceptor);
@@ -66,8 +67,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setClassesToBeBound(BusinessOpportunity.class);
-        marshaller.setSchema(new ClassPathResource("pdm-ws.xsd"));
+        marshaller.setClassesToBeBound(BusinessOpportunity.class, PDMDocument.class);
+        marshaller.setSchema(new ClassPathResource("pdm-docs.xsd"));
         HashMap<String, Object> props = new HashMap<String,Object>();
         props.put(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.setMarshallerProperties(props);

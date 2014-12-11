@@ -59,6 +59,8 @@ public class PdmDocsEndpoint {
                 request.getDocumentContent());
         
         StoreDocumentResponse response = new StoreDocumentResponse();
+        response.setStored(execution.acquired);
+        response.setNote(execution.message);
         return response;
     }
 }

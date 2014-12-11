@@ -101,26 +101,4 @@
         </complexType>
     </element>
 
-    <element name="BusinessOpportunity">
-        <complexType>
-            <sequence>
-                <element name="Numero_Bo" type="tns:PVString"/>
-                <element name="Riferimento_Bo" type="tns:PVString"/>
-                <element name="Codice_Cliente" type="tns:PVString"/>
-                <element name="Ragione_Sociale" type="tns:PVString"/>
-                <element name="Anno" type="string"/>
-            </sequence>
-            <attribute name="PathVault" type="string"/>
-            <attribute name="Company" type="string"/>
-        </complexType>
-    </element>
-
-     <complexType name="PVString" final="#all">
-        <simpleContent>
-            <extension base="string">
-                <attribute name="PropertyVault" type="string" use="required" />
-            </extension>
-        </simpleContent>
-    </complexType>
-
 </schema>
