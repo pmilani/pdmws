@@ -1,5 +1,6 @@
 package com.strazzabosco.pdmws;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -67,6 +68,9 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setClassesToBeBound(BusinessOpportunity.class);
         marshaller.setSchema(new ClassPathResource("pdm-ws.xsd"));
+        HashMap<String, Object> props = new HashMap<String,Object>();
+        props.put(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setMarshallerProperties(props);
         return marshaller;
     }
 }

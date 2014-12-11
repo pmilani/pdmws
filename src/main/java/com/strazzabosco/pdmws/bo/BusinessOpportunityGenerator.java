@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.strazzabosco.schemas.pdm_ws.BusinessOpportunity;
 import com.strazzabosco.schemas.pdm_ws.DatiBO;
 import com.strazzabosco.schemas.pdm_ws.LibreriaType;
+import com.strazzabosco.schemas.pdm_ws.PVString;
 
 @Component
 public class BusinessOpportunityGenerator {
@@ -41,6 +42,13 @@ public class BusinessOpportunityGenerator {
             return originalValue.toString();
         }
     }
+
+    private static PVString newPVString(String name, String value) {
+        PVString pvs = new PVString();
+        pvs.setPropertyVault(name);
+        pvs.setValue(value);
+        return pvs;
+    }
     
     public BusinessOpportunity transform(DatiBO meta) {
         String company = getMappedValue(LIBRERIA_MAPPING, meta.getLibreria());
@@ -50,10 +58,11 @@ public class BusinessOpportunityGenerator {
         bo.setCompany(company);
         bo.setPathVault(formatPathVault(company, boCode));
         
-        bo.setNumeroBo(boCode);
-        bo.setRiferimentoBo(meta.getRiferimento());
-        bo.setCodiceCliente(meta.getCodiceCliente());
-        bo.setRagioneSociale(meta.getRagioneSociale());
+        bo.setNumeroBo(newPVString("Numero BO", boCode));
+        bo.setRiferimentoBo(newPVString("Riferimento BO", meta.getRiferimento()));
+        bo.setCodiceCliente(newPVString("Codice Cliente", meta.getCodiceCliente()));
+        bo.setRagioneSociale(newPVString("Ragione Sociale",meta.getRagioneSociale()));
+        
         LocalDate docDate = LocalDate.parse(meta.getDataDocumento(), DateTimeFormat.forPattern("YYYYMMdd"));
         bo.setAnno(Integer.toString(docDate.getYear()));
         return bo;

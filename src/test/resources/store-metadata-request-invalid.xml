@@ -6,7 +6,7 @@
          <pdm:metadataId>ABC123</pdm:metadataId>
          <pdm:metadataContent>
             <pdm:DatiBO>
-                <pdm:Libreria>PRO80DAT</pdm:Libreria>
+                <pdm:Libreria>BLablaInvalid</pdm:Libreria>
                 <pdm:Documento>OF</pdm:Documento>
                 <pdm:NumeroBO>30</pdm:NumeroBO>
                 <pdm:DescrizioneBO><![CDATA[CANTIERE PROVA]]></pdm:DescrizioneBO>
