@@ -5,7 +5,29 @@
       <pdm:storeMetadataRequest>
          <pdm:metadataId>ABC123</pdm:metadataId>
          <pdm:metadataContent>
-            PERhdGlCTw0KICAgIDxMaWJyZXJpYT5QUk84MERBVDwvTGlicmVyaWE+DQogICAgPERvY3VtZW50bz5PRjwvRG9jdW1lbnRvPg0KICAgIDxOdW1lcm9CTz4zMDwvTnVtZXJvQk8+DQogICAgPERlc2NyaXppb25lQk8+PCFbQ0RBVEFbQ0FOVElFUkUgUFJPVkFdXT48L0Rlc2NyaXppb25lQk8+DQogICAgPFRpcG9Eb2N1bWVudG8+PCFbQ0RBVEFbUF1dPjwvVGlwb0RvY3VtZW50bz4NCiAgICA8TnVtZXJvRG9jdW1lbnRvPjE0MDAwNTM8L051bWVyb0RvY3VtZW50bz4NCiAgICA8RGF0YURvY3VtZW50bz4yMDE0MTIwMTwvRGF0YURvY3VtZW50bz4NCiAgICA8RGF0YVJpY2hpZXN0YUNvbnNlZ25hPjIwMTQxMjIwPC9EYXRhUmljaGllc3RhQ29uc2VnbmE+DQogICAgPERhdGFDb25mZXJtYUNvbnNlZ25hPjIwMTQxMjI4PC9EYXRhQ29uZmVybWFDb25zZWduYT4NCiAgICA8RGF0YUluZ3Jlc3NvUHJvcG9zdGE+PC9EYXRhSW5ncmVzc29Qcm9wb3N0YT4NCiAgICA8UmlmZXJpbWVudG8+PCFbQ0RBVEFbXV0+PC9SaWZlcmltZW50bz4NCiAgICA8UmlmZXJpbWVudG9UZWNuaWNvPjwhW0NEQVRBW11dPjwvUmlmZXJpbWVudG9UZWNuaWNvPg0KICAgIDxDYXBvQXJlYT48IVtDREFUQVtNQVNFTkVMTE8gQ0FSTE9dXT48L0NhcG9BcmVhPg0KICAgIDxBZ2VudGU+PCFbQ0RBVEFbRElSRVpJT05BTEkgSVRBTElBXV0+PC9BZ2VudGU+IA0KICAgIDxDb2RpY2VDbGllbnRlPjE0MTAxMTAwMDA8L0NvZGljZUNsaWVudGU+DQogICAgPFJhZ2lvbmVTb2NpYWxlPjwhW0NEQVRBW0FMUEFDIFMuUi5MLiBVTklQRVJTT05BTEVdXT48L1JhZ2lvbmVTb2NpYWxlPg0KICAgIDxGaXJtYT5TPC9GaXJtYT4NCiAgICA8VGlwb1Byb2RvdHRvPjwhW0NEQVRBW11dPjwvVGlwb1Byb2RvdHRvPiA/Pz8NCiAgICA8T3JkaW5lSW50ZXJjb21wYW55PjwhW0NEQVRBW11dPjwvT3JkaW5lSW50ZXJjb21wYW55PiA/Pz8gDQogICAgPFByb3ZpbmNpYURlc3RpbmF6aW9uZT48IVtDREFUQVtdXT48L1Byb3ZpbmNpYURlc3RpbmF6aW9uZT4gPz8/DQogICAgPERlc3RpbmF0YXJpb01lcmNlPjwhW0NEQVRBW11dPjwvRGVzdGluYXRhcmlvTWVyY2U+ID8/Pw0KPC9EYXRpQk8+ICAgICAg
+            <pdm:DatiBO>
+                <pdm:Libreria>PRO80DAT</pdm:Libreria>
+                <pdm:Documento>OF</pdm:Documento>
+                <pdm:NumeroBO>30</pdm:NumeroBO>
+                <pdm:DescrizioneBO><![CDATA[CANTIERE PROVA]]></pdm:DescrizioneBO>
+                <pdm:TipoDocumento>A</pdm:TipoDocumento>
+                <pdm:NumeroDocumento>1400053</pdm:NumeroDocumento>
+                <pdm:DataDocumento>20141201</pdm:DataDocumento>
+                <pdm:DataRichiestaConsegna>20141220</pdm:DataRichiestaConsegna>
+                <pdm:DataConfermaConsegna>20141228</pdm:DataConfermaConsegna>
+                <pdm:DataIngressoProposta></pdm:DataIngressoProposta>
+                <pdm:Riferimento><![CDATA[PIANO E RIFERIMENTO]]></pdm:Riferimento>
+                <pdm:RiferimentoTecnico><![CDATA[GRAZIANO GASPARONI]]></pdm:RiferimentoTecnico>
+                <pdm:CapoArea><![CDATA[MASENELLO CARLO]]></pdm:CapoArea>
+                <pdm:Agente><![CDATA[DIREZIONALI ITALIA]]></pdm:Agente> 
+                <pdm:CodiceCliente>1410110000</pdm:CodiceCliente>
+                <pdm:RagioneSociale><![CDATA[ALPAC S.R.L. UNIPERSONALE]]></pdm:RagioneSociale>
+                <pdm:Firma>S</pdm:Firma>
+                <pdm:TipoProdotto></pdm:TipoProdotto>
+                <pdm:OrdineIntercompany><![CDATA[]]></pdm:OrdineIntercompany> 
+                <pdm:ProvinciaDestinazione>VI</pdm:ProvinciaDestinazione>
+                <pdm:DestinatarioMerce><![CDATA[]]></pdm:DestinatarioMerce>
+            </pdm:DatiBO>
          </pdm:metadataContent>
       </pdm:storeMetadataRequest>
    </soapenv:Body>

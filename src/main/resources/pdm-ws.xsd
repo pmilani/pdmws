@@ -65,12 +65,20 @@
         </complexType>
     </element>
 
+    <simpleType name="LibreriaType">
+        <restriction base="string">
+            <enumeration value="ALP80DAT"/>
+            <enumeration value="PRO80DAT"/>
+            <enumeration value="CLI80DAT"/>
+        </restriction>
+    </simpleType>
+
     <element name="DatiBO">
         <complexType>
             <sequence>
-                <element name="Libreria" type="string"/>
+                <element name="Libreria" type="tns:LibreriaType"/>
                 <element name="Documento" type="string"/>
-                <element name="NumeroBO" type="string"/>
+                <element name="NumeroBO" type="int"/>
                 <element name="DescrizioneBO" type="string"/>
                 <element name="TipoDocumento" type="string"/>
                 <element name="NumeroDocumento" type="string"/>
@@ -96,7 +104,13 @@
     <element name="BusinessOpportunity">
         <complexType>
             <sequence>
-                <element name="Numero_Bo" type="string"/>
+                <element name="Numero_Bo">
+                    <simpleType>
+                        <restriction base="string">
+                            <pattern value="BO-[0-9]{7}"></pattern>
+                        </restriction>
+                    </simpleType>
+                </element>
                 <element name="Riferimento_Bo" type="string"/>
                 <element name="Codice_Cliente" type="string"/>
                 <element name="Ragione_Sociale" type="string"/>

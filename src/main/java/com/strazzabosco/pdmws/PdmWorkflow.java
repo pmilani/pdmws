@@ -74,7 +74,7 @@ public class PdmWorkflow {
             StreamResult result = new StreamResult(writer);
             marshaller.marshal(bo, result);
             boSerialNumber++;
-            LOG.info("Generated "+ file.getName());
+            LOG.info("BO generated "+ file.getName());
             
             return pdmProcessor.executePdm(file.getCanonicalPath());
             

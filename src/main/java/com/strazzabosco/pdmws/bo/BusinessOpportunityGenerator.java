@@ -9,29 +9,41 @@ import org.springframework.stereotype.Component;
 
 import com.strazzabosco.schemas.pdm_ws.BusinessOpportunity;
 import com.strazzabosco.schemas.pdm_ws.DatiBO;
+import com.strazzabosco.schemas.pdm_ws.LibreriaType;
 
 @Component
 public class BusinessOpportunityGenerator {
     
-    public static final Map<String, Map<String, String>> fieldMapping = new HashMap<String, Map<String,String>>();
+    /**
+     * Defines a mapping: mapping name -> map of values
+     * The map of values is a map : original value -> new value
+     */
+    public static final Map<String, Map<?, String>> dataMapping = new HashMap<String, Map<?,String>>();
+
+    private static final String LIBRERIA_MAPPING = "Libreria";
     
     static {
-        Map<String, String> valueMappingLibreria = new HashMap<String, String>();
-        fieldMapping.put("Libreria", valueMappingLibreria);
-        valueMappingLibreria.put("PRO80DAT", "ALPAC");
+        Map<LibreriaType, String> valueMappingLibreria = new HashMap<LibreriaType, String>();
+        dataMapping.put(LIBRERIA_MAPPING, valueMappingLibreria);
+        valueMappingLibreria.put(LibreriaType.ALP_80_DAT, "ALPAC");
+        valueMappingLibreria.put(LibreriaType.PRO_80_DAT, "ALPAC");
+        valueMappingLibreria.put(LibreriaType.CLI_80_DAT, "CLIMAPAC");
     }
 
-    private String getMappedValue(String fieldName, String originalValue) {
-        Map<String, String> valueMapping = fieldMapping.get(fieldName);
+    /**
+     * Maps a value or returns the original if no mapping is defined
+     */
+    private <T> String getMappedValue(String mappingName, T originalValue) {
+        Map<?, String> valueMapping = dataMapping.get(mappingName);
         if (valueMapping.containsKey(originalValue)) {
             return valueMapping.get(originalValue);
         } else {
-            return originalValue;
+            return originalValue.toString();
         }
     }
     
     public BusinessOpportunity transform(DatiBO meta) {
-        String company = getMappedValue("Libreria", meta.getLibreria());
+        String company = getMappedValue(LIBRERIA_MAPPING, meta.getLibreria());
         String boCode = formatBoCode(meta.getNumeroBO());
         
         BusinessOpportunity bo = new BusinessOpportunity();
@@ -47,9 +59,8 @@ public class BusinessOpportunityGenerator {
         return bo;
     }
 
-    private String formatBoCode(String numeroBO) {
-        int n = Integer.valueOf(numeroBO);
-        return String.format("BO-%07d", n);
+    private String formatBoCode(int numeroBO) {
+        return String.format("BO-%07d", numeroBO);
     }
 
     private String formatPathVault(String company, String boCode) {
