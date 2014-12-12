@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://strazzabosco.com/schemas/pdm-docs" xmlns:tns="http://strazzabosco.com/schemas/pdm-docs" elementFormDefault="qualified">
+
+    <complexType name="PVString" final="#all">
+        <simpleContent>
+            <extension base="string">
+                <attribute name="PropertyVault" type="string" use="required" />
+            </extension>
+        </simpleContent>
+    </complexType>
+
+    <element name="BusinessOpportunity">
+        <complexType>
+            <sequence>
+                <element name="Numero_Bo" type="tns:PVString"/>
+                <element name="Riferimento_Bo" type="tns:PVString"/>
+                <element name="Codice_Cliente" type="tns:PVString"/>
+                <element name="Ragione_Sociale" type="tns:PVString"/>
+                <element name="Anno" type="string"/>
+            </sequence>
+            <attribute name="PathVault" type="string"/>
+            <attribute name="Company" type="string"/>
+        </complexType>
+    </element>
+
+    <complexType name="PDMDocument" abstract="true">
+        <attribute name="Path" type="string"/>
+        <attribute name="PathVault" type="string"/>
+        <attribute name="BO" type="string"/>
+        <attribute name="Company" type="string"/>
+    </complexType>
+
+    <element name="Prevendita">
+        <complexType>
+            <complexContent>
+                <extension base="tns:PDMDocument">
+                    <sequence>
+                        <element name="Codice" type="tns:PVString"/>
+                        <element name="TCE" type="boolean"/>
+                        <element name="Galileo" type="boolean"/>
+                        <element name="Data" type="string"/>
+                        <element name="Riferimento" type="tns:PVString"/>
+                        <element name="Riferimento_Tecnico" type="tns:PVString"/>
+                        <element name="Cliente_Codice" type="tns:PVString"/>
+                        <element name="Cliente_Ragione_S" type="tns:PVString"/>
+                        <element name="Firma" type="boolean"/>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="Riepilogo">
+        <complexType>
+            <complexContent>
+                <extension base="tns:PDMDocument">
+                    <sequence>
+                        <element name="Codice" type="tns:PVString"/>
+                        <element name="Numero_Ordine" type="tns:PVString"/>
+                        <element name="Ordine_Intercompany" type="tns:PVString"/>
+                        <element name="Data_Inserimento" type="tns:PVString"/>
+                        <element name="Cliente_Codice" type="tns:PVString"/>
+                        <element name="Cliente_Ragione_S" type="tns:PVString"/>
+                        <element name="Data_Ric_Cons" type="tns:PVString"/>
+                        <element name="Data_Conf_Cons" type="tns:PVString"/>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="Controllo_Service">
+        <complexType>
+            <complexContent>
+                <extension base="tns:PDMDocument">
+                    <sequence>
+                        <element name="Codice" type="tns:PVString"/>
+                        <element name="Tipo_Ordine" type="tns:PVString"/>
+                        <element name="Numero_Ordine" type="tns:PVString"/>
+                        <element name="Ordine_Intercompany" type="tns:PVString"/>
+                        <element name="Data_Inserimento" type="tns:PVString"/>
+                        <element name="Cliente_Codice" type="tns:PVString"/>
+                        <element name="Cliente_Ragione_S" type="tns:PVString"/>
+                        <element name="Destinatario_Merce" type="tns:PVString"/>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+</schema>

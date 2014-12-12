@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:pdm="http://strazzabosco.com/schemas/pdm-ws">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pdm:storeDocumentRequest>
+         <pdm:metadataId>ABC123</pdm:metadataId>
+         <pdm:documentClass>prevendita</pdm:documentClass>
+         <pdm:documentContent>
+            e1xydGYxXGFuc2lcYW5zaWNwZzEyNTJcY29jb2FydGYxMTg3XGNvY29hc3VicnRmNDAwCntcZm9udHRibFxmMFxmc3dpc3NcZmNoYXJzZXQwIEhlbHZldGljYTt9CntcY29sb3J0Ymw7XHJlZDI1NVxncmVlbjI1NVxibHVlMjU1O30KXHBhcGVydzExOTAwXHBhcGVyaDE2ODQwXG1hcmdsMTQ0MFxtYXJncjE0NDBcdmlld3cxMDgwMFx2aWV3aDg0MDBcdmlld2tpbmQwClxwYXJkXHR4NTY2XHR4MTEzM1x0eDE3MDBcdHgyMjY3XHR4MjgzNFx0eDM0MDFcdHgzOTY4XHR4NDUzNVx0eDUxMDJcdHg1NjY5XHR4NjIzNlx0eDY4MDNccGFyZGlybmF0dXJhbAoKXGYwXGJcZnM0OCBcY2YwIFVOIGJlbCBkb2N1bWVudG8gUlRGXAoKXGIwXGZzMjQgXApsb3JlbSBpcHN1bVwKZmluZS5cCn0=
+         </pdm:documentContent>
+      </pdm:storeDocumentRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
