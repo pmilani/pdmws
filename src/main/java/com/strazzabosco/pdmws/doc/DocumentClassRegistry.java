@@ -16,10 +16,10 @@ public class DocumentClassRegistry {
 
     private static List<String> documentClasses;
     
-    private Map<String, DocumentGenerator> generators;
+    private Map<String, DocumentGenerator<?>> generators;
 
     @Autowired
-    public DocumentClassRegistry(@Value("${documentClasses}") String acceptedClasses, Map<String, DocumentGenerator> generators) {
+    public DocumentClassRegistry(@Value("${documentClasses}") String acceptedClasses, Map<String, DocumentGenerator<?>> generators) {
         documentClasses = Arrays.asList(StringUtils.split(acceptedClasses, ","));
         this.generators = generators;
     }
@@ -30,7 +30,7 @@ public class DocumentClassRegistry {
         }
     }
 
-    public DocumentGenerator getGenerator(String documentClass) {
+    public DocumentGenerator<?> getGenerator(String documentClass) {
         return generators.get(documentClass + "Generator");
     }
 }
